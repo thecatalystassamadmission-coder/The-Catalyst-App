@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admission Form (6-8) - App Version</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; background-color: #fffcf0; color: #333; }
+        header { background-color: #1a0066; color: white; text-align: center; padding: 20px; border-bottom: 5px solid yellow; }
+        header h1 { margin: 0; font-size: 2rem; text-transform: uppercase; }
+        .container { padding: 30px; max-width: 650px; margin: auto; text-align: center; }
+        .form-box { background: white; padding: 40px 30px; border-radius: 15px; border: 3px solid red; box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+        h2.form-title { color: #1a0066; text-transform: uppercase; text-decoration: underline; margin-bottom: 20px; }
+        .proceed-btn { background-color: #0044ff; color: white; border: none; padding: 18px 25px; width: 100%; border-radius: 30px; cursor: pointer; font-weight: bold; font-size: 1.2rem; text-transform: uppercase; margin-top: 10px; text-decoration: none; display: inline-block; box-shadow: 0 5px 15px rgba(0,68,255,0.4); transition: 0.3s; box-sizing: border-box; }
+        .proceed-btn:hover { background-color: #0033cc; transform: translateY(-3px); }
+        p.info-text { font-size: 1.1rem; color: #333; line-height: 1.6; margin-bottom: 20px; }
+        
+        /* FIXED WARNING BUBBLE */
+        .warning-box { 
+            background: #e6ffe6; 
+            border: 2px dashed green; 
+            padding: 10px 20px; 
+            border-radius: 30px; /* Made it more rounded like a bubble */
+            color: green; 
+            font-weight: bold; 
+            margin-bottom: 25px; 
+            font-size: 1.2rem; 
+            display: inline-block; /* Ye line box ko bahar failne se rokegi */
+            box-shadow: 0 3px 8px rgba(0, 128, 0, 0.2);
+        }
+        
+        /* New Box for showing Selected Subjects & Fees */
+        .details-box { background: #f0f8ff; border: 2px solid #1a0066; padding: 15px; border-radius: 10px; margin-bottom: 25px; text-align: left; }
+        .details-box h3 { margin-top: 0; color: #1a0066; font-size: 1.2rem; text-decoration: underline; text-align: center; }
+        .detail-item { font-size: 1.1rem; margin-bottom: 8px; font-weight: bold; }
+        .detail-value { color: red; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>The Catalyst Assam</h1>
+        <p style="letter-spacing: 5px; font-weight: bold; margin: 5px 0 0 0;">6TH TO 8TH ADMISSION PACKAGE</p>
+    </header>
+    
+    <div class="container">
+        <div class="form-box">
+            <h2 class="form-title">ADMISSION FORM</h2>
+            
+            <div class="warning-box">
+                🚀 Secure & Fast Admission Process
+            </div>
+            
+            <p class="info-text">
+                <strong>Please click on the "Proceed to Admission Form" button below to complete your admission process.</strong><br><br>
+                <span style="color:#1a0066; font-weight:bold;">অনুগ্ৰহ কৰি তলৰ "PROCEED TO ADMISSION FORM" বুটামত ক্লিক কৰি আপোনাৰ নামভৰ্তি সম্পূৰ্ণ কৰক।</span>
+            </p>
+
+            <div class="details-box" id="student-details" style="display: none;">
+                <h3>YOUR SELECTED PACKAGE</h3>
+                <div class="detail-item">Medium: <span class="detail-value" id="disp-med"></span></div>
+                <div class="detail-item">Subjects: <span class="detail-value" id="disp-sub" style="color:blue;"></span></div>
+                <div class="detail-item">Admission Fee: <span class="detail-value" id="disp-adm"></span></div>
+                <div class="detail-item">Monthly Fee: <span class="detail-value" id="disp-mon"></span></div>
+            </div>
+            
+            <a href="#" id="redirect-btn" class="proceed-btn" target="_blank">PROCEED TO ADMISSION FORM ➔</a>
+        </div>
+    </div>
+
+    <script>
+        // URL se query params lena
+        const queryString = window.location.search;
+        const params = new URLSearchParams(queryString);
+        
+        // Data nikalna
+        const medium = params.get('medium');
+
+        // Agar Medium select kiya gaya hai, toh Fixed Package Details dikhana
+        if(medium) {
+            document.getElementById('student-details').style.display = 'block';
+            document.getElementById('disp-med').innerText = medium.toUpperCase();
+            document.getElementById('disp-sub').innerText = "MATHS, SCIENCE, ENGLISH";
+            document.getElementById('disp-adm').innerText = "₹ 1100 (1st Month Free)";
+            document.getElementById('disp-mon').innerText = "₹ 1000";
+        }
+
+        // Tumhari LIVE main website ka exact link us data ke sath
+        const mainWebsiteLink = "https://thecatalystassam.com/admission_6_to_8_final.html" + queryString;
+        
+        // Button mein link set karna
+        document.getElementById("redirect-btn").href = mainWebsiteLink;
+    </script>
+</body>
+</html>
