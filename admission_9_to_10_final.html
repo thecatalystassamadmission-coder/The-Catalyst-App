@@ -11,7 +11,7 @@
         .container { padding: 30px; max-width: 650px; margin: auto; text-align: center; }
         .form-box { background: white; padding: 40px 30px; border-radius: 15px; border: 3px solid #006600; box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
         h2.form-title { color: #006600; text-transform: uppercase; text-decoration: underline; margin-bottom: 20px; }
-        .proceed-btn { background-color: #006600; color: white; border: none; padding: 18px 25px; width: 100%; border-radius: 30px; cursor: pointer; font-weight: bold; font-size: 1.2rem; text-transform: uppercase; margin-top: 10px; display: inline-block; box-shadow: 0 5px 15px rgba(0, 102, 0, 0.4); transition: 0.3s; box-sizing: border-box; }
+        .proceed-btn { background-color: #006600; color: white; border: none; padding: 18px 25px; width: 100%; border-radius: 30px; cursor: pointer; font-weight: bold; font-size: 1.2rem; text-transform: uppercase; margin-top: 10px; display: inline-block; text-decoration: none; box-shadow: 0 5px 15px rgba(0, 102, 0, 0.4); transition: 0.3s; box-sizing: border-box; }
         .proceed-btn:hover { background-color: #004d00; transform: translateY(-3px); }
         p.info-text { font-size: 1.1rem; color: #333; line-height: 1.6; margin-bottom: 20px; }
         
@@ -63,7 +63,7 @@
                 <div class="detail-item">Monthly Fee: <span class="detail-value" id="disp-mon"></span></div>
             </div>
             
-            <button id="redirect-btn" class="proceed-btn">PROCEED TO ADMISSION FORM ➔</button>
+            <a href="#" id="redirect-btn" class="proceed-btn" target="_system">PROCEED TO ADMISSION FORM ➔</a>
         </div>
     </div>
 
@@ -75,7 +75,6 @@
         // Data nikalna
         const medium = params.get('medium');
 
-        // Agar Medium select kiya gaya hai, toh Fixed Package Details dikhana
         if(medium) {
             document.getElementById('student-details').style.display = 'block';
             document.getElementById('disp-med').innerText = medium.toUpperCase();
@@ -85,25 +84,21 @@
         }
 
         // Asli link (Bina https:// ke)
-        const baseLink = "thecatalystassam.com/admission_9_to_10_final.html" + queryString;
+        const baseHostPath = "thecatalystassam.com/admission_9_to_10_final.html" + queryString;
         
-        // --- ANDROID INTENT TRICK ---
-        document.getElementById("redirect-btn").addEventListener("click", function() {
-            const isAndroid = navigator.userAgent.toLowerCase().indexOf("android") > -1;
-            
-            if(isAndroid) {
-                // 100% Force Chrome Trick
-                const chromeIntent = "intent://" + baseLink + "#Intent;scheme=https;package=com.android.chrome;action=android.intent.action.VIEW;end;";
-                window.location.href = chromeIntent;
-                
-                // Fallback (Agar kisi wajah se Chrome na khule)
-                setTimeout(function() {
-                    window.location.href = "intent://" + baseLink + "#Intent;scheme=https;action=android.intent.action.VIEW;end;";
-                }, 600);
-            } else {
-                window.open("https://" + baseLink, "_blank");
-            }
-        });
+        // --- REAL ANDROID INTENT TRICK ---
+        // Button dabne se pehle hi hum uska link 'intent' format me set kar dete hain
+        const isAndroid = navigator.userAgent.toLowerCase().indexOf("android") > -1;
+        const btn = document.getElementById("redirect-btn");
+
+        if(isAndroid) {
+            // Android ke default browser (Chrome) mein open karne ka system code
+            btn.href = "intent://" + baseHostPath + "#Intent;scheme=https;action=android.intent.action.VIEW;end;";
+        } else {
+            // PC ya Laptop ke liye normal link
+            btn.href = "https://" + baseHostPath;
+            btn.target = "_blank";
+        }
     </script>
 </body>
 </html>
