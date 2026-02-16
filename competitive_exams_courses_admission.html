@@ -11,7 +11,8 @@
         .container { padding: 30px; max-width: 650px; margin: auto; text-align: center; }
         .form-box { background: white; padding: 40px 30px; border-radius: 15px; border: 3px solid #008080; box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
         h2.form-title { color: #008080; text-transform: uppercase; text-decoration: underline; margin-bottom: 20px; }
-        .proceed-btn { background-color: #008080; color: white; border: none; padding: 18px 25px; width: 100%; border-radius: 30px; cursor: pointer; font-weight: bold; font-size: 1.2rem; text-transform: uppercase; margin-top: 10px; text-decoration: none; display: inline-block; box-shadow: 0 5px 15px rgba(0, 128, 128, 0.4); transition: 0.3s; box-sizing: border-box; }
+        /* Button style me text-align add kiya */
+        .proceed-btn { background-color: #008080; color: white; border: none; padding: 18px 25px; width: 100%; border-radius: 30px; cursor: pointer; font-weight: bold; font-size: 1.2rem; text-transform: uppercase; margin-top: 10px; text-decoration: none; display: inline-block; box-shadow: 0 5px 15px rgba(0, 128, 128, 0.4); transition: 0.3s; box-sizing: border-box; text-align: center; }
         .proceed-btn:hover { background-color: #006666; transform: translateY(-3px); }
         p.info-text { font-size: 1.1rem; color: #333; line-height: 1.6; margin-bottom: 20px; }
         
@@ -20,12 +21,12 @@
             background: #e0f2f1; 
             border: 2px dashed #008080; 
             padding: 10px 20px; 
-            border-radius: 30px; /* Made it round like a bubble */
+            border-radius: 30px; 
             color: #008080; 
             font-weight: bold; 
             margin-bottom: 25px; 
             font-size: 1.2rem; 
-            display: inline-block; /* Ye line ise bahar stretch hone se rokegi */
+            display: inline-block; 
             box-shadow: 0 3px 8px rgba(0, 128, 128, 0.2);
         }
         
@@ -61,7 +62,7 @@
                 <div class="detail-item">Total Course Fee: <span class="detail-value" id="disp-fee"></span> <span style="color:#008080; font-size:0.9rem;">(Full Course)</span></div>
             </div>
             
-            <a href="#" id="redirect-btn" class="proceed-btn" target="_blank">PROCEED TO ADMISSION FORM ➔</a>
+            <button id="redirect-btn" class="proceed-btn">PROCEED TO ADMISSION FORM ➔</button>
         </div>
     </div>
 
@@ -81,11 +82,22 @@
             document.getElementById('disp-fee').innerText = fee ? '₹ ' + fee : '₹ 0';
         }
 
-        // Tumhari LIVE main website ka exact link us data ke sath
-        const mainWebsiteLink = "https://thecatalystassam.com/competitive_exams_courses_admission.html" + queryString;
-        
-        // Button mein link set karna
-        document.getElementById("redirect-btn").href = mainWebsiteLink;
+        const baseHostPath = "thecatalystassam.com/competitive_exams_courses_admission.html" + queryString;
+        const fullUrl = "https://" + baseHostPath;
+
+        // BUTTON CLICK TRICK (Multiple Escapes)
+        document.getElementById("redirect-btn").addEventListener("click", function() {
+            // Escape 1: Try AppCreator24's native external call
+            try { window.open(fullUrl, "_system"); } catch(e) {}
+            
+            // Escape 2: Standard Blank Target
+            setTimeout(function() { window.open(fullUrl, "_blank"); }, 100);
+            
+            // Escape 3: Direct Android Chrome Intent Bypass (Aakhri Hathiyar)
+            setTimeout(function() {
+                window.location.href = "intent://" + baseHostPath + "#Intent;scheme=https;package=com.android.chrome;end;";
+            }, 400);
+        });
     </script>
 </body>
 </html>
