@@ -20,12 +20,12 @@
             background: #e6ffe6; 
             border: 2px dashed green; 
             padding: 10px 20px; 
-            border-radius: 30px; /* Made it round like a bubble */
+            border-radius: 30px; 
             color: green; 
             font-weight: bold; 
             margin-bottom: 25px; 
             font-size: 1.2rem; 
-            display: inline-block; /* Ye line ise bahar stretch hone se rokegi */
+            display: inline-block; 
             box-shadow: 0 3px 8px rgba(0, 128, 0, 0.2);
         }
         
@@ -63,7 +63,7 @@
                 <div class="detail-item">Monthly Fee: <span class="detail-value" id="disp-mon"></span></div>
             </div>
             
-            <a href="#" id="redirect-btn" class="proceed-btn" target="_blank">PROCEED TO ADMISSION FORM ➔</a>
+            <a href="#" id="redirect-btn" class="proceed-btn">PROCEED TO ADMISSION FORM ➔</a>
         </div>
     </div>
 
@@ -87,11 +87,21 @@
             document.getElementById('disp-mon').innerText = mon ? '₹ ' + mon : '₹ 0';
         }
 
-        // Tumhari LIVE main website ka exact link us data ke sath
-        const mainWebsiteLink = "https://thecatalystassam.com/6th_to_8th_single_Subject_admission.html" + queryString;
+        // --- ANDROID INTENT TRICK (AppCreator24 ko bypass karne ke liye) ---
         
-        // Button mein link set karna
-        document.getElementById("redirect-btn").href = mainWebsiteLink;
+        // Asli link (Bina https:// ke likhna hota hai intent me)
+        const baseLink = "thecatalystassam.com/6th_to_8th_single_Subject_admission.html" + queryString;
+        
+        // Check karna ki user Android Phone (App) chala raha hai ya Computer
+        const isAndroid = navigator.userAgent.toLowerCase().indexOf("android") > -1;
+        
+        if(isAndroid) {
+            // Agar Android App hai, toh force Chrome/External Browser
+            document.getElementById("redirect-btn").href = "intent://" + baseLink + "#Intent;scheme=https;end";
+        } else {
+            // Agar Computer hai toh normal link chalega
+            document.getElementById("redirect-btn").href = "https://" + baseLink;
+        }
     </script>
 </body>
 </html>
