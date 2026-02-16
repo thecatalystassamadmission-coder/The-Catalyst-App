@@ -88,18 +88,28 @@
         const baseHostPath = "thecatalystassam.com/degree_Courses_admission.html" + queryString;
         const fullUrl = "https://" + baseHostPath;
 
-        // BUTTON CLICK TRICK (Multiple Escapes)
+        // NEW ULTIMATE ESCAPE TRICK
         document.getElementById("redirect-btn").addEventListener("click", function() {
-            // Escape 1: Try AppCreator24's native external call
-            try { window.open(fullUrl, "_system"); } catch(e) {}
+            const isAndroid = navigator.userAgent.toLowerCase().indexOf("android") > -1;
             
-            // Escape 2: Standard Blank Target
-            setTimeout(function() { window.open(fullUrl, "_blank"); }, 100);
-            
-            // Escape 3: Direct Android Chrome Intent Bypass (Aakhri Hathiyar)
-            setTimeout(function() {
-                window.location.href = "intent://" + baseHostPath + "#Intent;scheme=https;package=com.android.chrome;end;";
-            }, 400);
+            if (isAndroid) {
+                // Ek nakli (hidden) link banayenge background me
+                var hiddenLink = document.createElement("a");
+                hiddenLink.href = "intent://" + baseHostPath + "#Intent;scheme=https;package=com.android.chrome;action=android.intent.action.VIEW;end;";
+                hiddenLink.target = "_system"; // AppCreator24 ko bolna ki system browser me kholo
+                
+                // Link ko page me daal kar turant click karwayenge
+                document.body.appendChild(hiddenLink);
+                hiddenLink.click();
+                document.body.removeChild(hiddenLink);
+                
+                // Backup
+                setTimeout(function() {
+                    window.location.href = fullUrl;
+                }, 600);
+            } else {
+                window.open(fullUrl, "_blank");
+            }
         });
     </script>
 </body>
