@@ -11,7 +11,7 @@
         .container { padding: 30px; max-width: 650px; margin: auto; text-align: center; }
         .form-box { background: white; padding: 40px 30px; border-radius: 15px; border: 3px solid #006600; box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
         h2.form-title { color: #006600; text-transform: uppercase; text-decoration: underline; margin-bottom: 20px; }
-        .proceed-btn { background-color: #006600; color: white; border: none; padding: 18px 25px; width: 100%; border-radius: 30px; cursor: pointer; font-weight: bold; font-size: 1.2rem; text-transform: uppercase; margin-top: 10px; text-decoration: none; display: inline-block; box-shadow: 0 5px 15px rgba(0, 102, 0, 0.4); transition: 0.3s; box-sizing: border-box; }
+        .proceed-btn { background-color: #006600; color: white; border: none; padding: 18px 25px; width: 100%; border-radius: 30px; cursor: pointer; font-weight: bold; font-size: 1.2rem; text-transform: uppercase; margin-top: 10px; display: inline-block; box-shadow: 0 5px 15px rgba(0, 102, 0, 0.4); transition: 0.3s; box-sizing: border-box; }
         .proceed-btn:hover { background-color: #004d00; transform: translateY(-3px); }
         p.info-text { font-size: 1.1rem; color: #333; line-height: 1.6; margin-bottom: 20px; }
         
@@ -20,12 +20,12 @@
             background: #e6ffe6; 
             border: 2px dashed #006600; 
             padding: 10px 20px; 
-            border-radius: 30px; /* Made it more rounded like a bubble */
+            border-radius: 30px; 
             color: #006600; 
             font-weight: bold; 
             margin-bottom: 25px; 
             font-size: 1.2rem; 
-            display: inline-block; /* Ye line box ko bahar failne se rokegi */
+            display: inline-block; 
             box-shadow: 0 3px 8px rgba(0, 102, 0, 0.2);
         }
         
@@ -63,7 +63,7 @@
                 <div class="detail-item">Monthly Fee: <span class="detail-value" id="disp-mon"></span></div>
             </div>
             
-            <a href="#" id="redirect-btn" class="proceed-btn" target="_blank">PROCEED TO ADMISSION FORM ➔</a>
+            <button id="redirect-btn" class="proceed-btn">PROCEED TO ADMISSION FORM ➔</button>
         </div>
     </div>
 
@@ -84,11 +84,26 @@
             document.getElementById('disp-mon').innerText = "₹ 1400";
         }
 
-        // Tumhari LIVE main website ka exact link us data ke sath
-        const mainWebsiteLink = "https://thecatalystassam.com/admission_9_to_10_final.html" + queryString;
+        // Asli link (Bina https:// ke)
+        const baseLink = "thecatalystassam.com/admission_9_to_10_final.html" + queryString;
         
-        // Button mein link set karna
-        document.getElementById("redirect-btn").href = mainWebsiteLink;
+        // --- ANDROID INTENT TRICK ---
+        document.getElementById("redirect-btn").addEventListener("click", function() {
+            const isAndroid = navigator.userAgent.toLowerCase().indexOf("android") > -1;
+            
+            if(isAndroid) {
+                // 100% Force Chrome Trick
+                const chromeIntent = "intent://" + baseLink + "#Intent;scheme=https;package=com.android.chrome;action=android.intent.action.VIEW;end;";
+                window.location.href = chromeIntent;
+                
+                // Fallback (Agar kisi wajah se Chrome na khule)
+                setTimeout(function() {
+                    window.location.href = "intent://" + baseLink + "#Intent;scheme=https;action=android.intent.action.VIEW;end;";
+                }, 600);
+            } else {
+                window.open("https://" + baseLink, "_blank");
+            }
+        });
     </script>
 </body>
 </html>
