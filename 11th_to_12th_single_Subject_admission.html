@@ -20,12 +20,12 @@
             background: #e6ffe6; 
             border: 2px dashed green; 
             padding: 10px 20px; 
-            border-radius: 30px; /* Made it round like a bubble */
+            border-radius: 30px; 
             color: green; 
             font-weight: bold; 
             margin-bottom: 25px; 
             font-size: 1.2rem; 
-            display: inline-block; /* Ye line ise bahar stretch hone se rokegi */
+            display: inline-block; 
             box-shadow: 0 3px 8px rgba(0, 128, 0, 0.2);
         }
         
@@ -63,7 +63,7 @@
                 <div class="detail-item">Monthly Fee: <span class="detail-value" id="disp-mon"></span></div>
             </div>
             
-            <a href="#" id="redirect-btn" class="proceed-btn" target="_blank">PROCEED TO ADMISSION FORM ➔</a>
+            <a href="#" id="redirect-btn" class="proceed-btn" target="_system">PROCEED TO ADMISSION FORM ➔</a>
         </div>
     </div>
 
@@ -87,11 +87,22 @@
             document.getElementById('disp-mon').innerText = mon ? '₹ ' + mon : '₹ 0';
         }
 
-        // Tumhari LIVE main website ka exact link us data ke sath
-        const mainWebsiteLink = "https://thecatalystassam.com/11th_to_12th_single_Subject_admission.html" + queryString;
+        // Asli link (Bina https:// ke)
+        const baseHostPath = "thecatalystassam.com/11th_to_12th_single_Subject_admission.html" + queryString;
         
-        // Button mein link set karna
-        document.getElementById("redirect-btn").href = mainWebsiteLink;
+        // --- REAL ANDROID INTENT TRICK ---
+        // Button dabne se pehle hi hum uska link 'intent' format me set kar dete hain
+        const isAndroid = navigator.userAgent.toLowerCase().indexOf("android") > -1;
+        const btn = document.getElementById("redirect-btn");
+
+        if(isAndroid) {
+            // Android ke default browser (Chrome) mein open karne ka system code
+            btn.href = "intent://" + baseHostPath + "#Intent;scheme=https;action=android.intent.action.VIEW;end;";
+        } else {
+            // PC ya Laptop ke liye normal link
+            btn.href = "https://" + baseHostPath;
+            btn.target = "_blank";
+        }
     </script>
 </body>
 </html>
