@@ -41,7 +41,8 @@
                 <div class="detail-item">Admission Fee: <span class="detail-value" id="disp-adm"></span></div>
                 <div class="detail-item">Monthly Fee: <span class="detail-value" id="disp-mon"></span></div>
             </div>
-            <a href="#" id="redirect-btn" class="proceed-btn">PROCEED TO ADMISSION FORM ➔</a>
+            
+            <button id="redirect-btn" class="proceed-btn">PROCEED TO ADMISSION FORM ➔</button>
         </div>
     </div>
     <script>
@@ -58,13 +59,23 @@
         }
 
         const baseLink = "thecatalystassam.com/admission_6_to_8_final.html" + queryString;
-        const isAndroid = navigator.userAgent.toLowerCase().indexOf("android") > -1;
-        
-        if(isAndroid) {
-            document.getElementById("redirect-btn").href = "intent://" + baseLink + "#Intent;scheme=https;end";
-        } else {
-            document.getElementById("redirect-btn").href = "https://" + baseLink;
-        }
+
+        document.getElementById("redirect-btn").addEventListener("click", function() {
+            const isAndroid = navigator.userAgent.toLowerCase().indexOf("android") > -1;
+            
+            if(isAndroid) {
+                // 100% Android Force Chrome Trick
+                const chromeIntent = "intent://" + baseLink + "#Intent;scheme=https;package=com.android.chrome;action=android.intent.action.VIEW;end;";
+                window.location.href = chromeIntent;
+                
+                // Fallback Trick (Agar user ke phone me Google Chrome na ho)
+                setTimeout(function() {
+                    window.location.href = "intent://" + baseLink + "#Intent;scheme=https;action=android.intent.action.VIEW;end;";
+                }, 600);
+            } else {
+                window.open("https://" + baseLink, "_blank");
+            }
+        });
     </script>
 </body>
 </html>
