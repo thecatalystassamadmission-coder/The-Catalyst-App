@@ -2,101 +2,239 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Competitive Exams Admission - App Version</title>
+    <title>Competitive Exams Admission - The Catalyst Assam</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <style>
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; background-color: #fffcf0; color: #333; }
         header { background-color: #008080; color: white; text-align: center; padding: 20px; border-bottom: 5px solid yellow; }
         header h1 { margin: 0; font-size: 2rem; text-transform: uppercase; }
-        .container { padding: 30px; max-width: 650px; margin: auto; text-align: center; }
-        .form-box { background: white; padding: 40px 30px; border-radius: 15px; border: 3px solid #008080; box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
-        h2.form-title { color: #008080; text-transform: uppercase; text-decoration: underline; margin-bottom: 20px; }
-        /* Button style me text-align add kiya */
-        .proceed-btn { background-color: #008080; color: white; border: none; padding: 18px 25px; width: 100%; border-radius: 30px; cursor: pointer; font-weight: bold; font-size: 1.2rem; text-transform: uppercase; margin-top: 10px; text-decoration: none; display: inline-block; box-shadow: 0 5px 15px rgba(0, 128, 128, 0.4); transition: 0.3s; box-sizing: border-box; text-align: center; }
-        .proceed-btn:hover { background-color: #006666; transform: translateY(-3px); }
-        p.info-text { font-size: 1.1rem; color: #333; line-height: 1.6; margin-bottom: 20px; }
+        .container { padding: 30px; max-width: 650px; margin: auto; }
+        .form-box { background: white; padding: 30px; border-radius: 15px; border: 3px solid #008080; box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+        h2.form-title { color: #008080; text-align: center; text-transform: uppercase; text-decoration: underline; margin-bottom: 25px; }
+        .input-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; color: #008080; font-size: 1.05rem; }
+        input, select, textarea { width: 100%; padding: 12px; border: 2px solid #ccc; border-radius: 5px; box-sizing: border-box; font-size: 1rem; transition: border 0.3s; }
+        input:focus, select:focus, textarea:focus { border-color: #008080; outline: none; }
+        .photo-upload-box { text-align: center; margin-bottom: 20px; padding: 15px; border: 2px dashed #008080; border-radius: 10px; background: #e0f2f1; }
+        .photo-frame { width: 140px; height: 180px; border: 3px solid #008080; background: #ddd; overflow: hidden; border-radius: 5px; margin: 0 auto 10px auto; position: relative; }
+        .photo-preview { width: 100%; height: 100%; object-fit: cover; object-position: top center; transition: object-position 0.2s ease; }
+        .adjust-btn { background: #008080; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer; font-size: 0.8rem; margin: 0 5px; }
+        .radio-container { display: flex; gap: 20px; margin-top: 5px; flex-wrap: wrap; }
+        .radio-label { display: flex; align-items: center; gap: 8px; font-weight: bold; cursor: pointer; font-size: 1rem; }
+        input[type="radio"], input[type="checkbox"] { width: 20px; height: 20px; accent-color: #008080; cursor: pointer; }
+        .submit-btn { background-color: #ccc; color: white; border: none; padding: 15px; width: 100%; border-radius: 30px; cursor: not-allowed; font-weight: bold; font-size: 1.2rem; text-transform: uppercase; margin-top: 20px; }
+        .submit-btn.active { background-color: #008080; cursor: pointer; }
+        #loading-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 9999; text-align: center; color: white; padding-top: 200px; }
+        #success-message { display: none; text-align: center; background: #e0f2f1; padding: 30px; border-radius: 15px; border: 3px solid #008080; }
+        .dob-container { display: flex; gap: 15px; }
+        .dob-box { flex: 1; }
+        .age-box { flex: 1; }
+        input[readonly] { background-color: #e9ecef; }
+        .magic-box { background: #e0f2f1; padding: 15px; border: 2px dashed #008080; border-radius: 10px; margin-bottom: 15px; }
         
-        /* FIXED WARNING BUBBLE */
-        .warning-box { 
-            background: #e0f2f1; 
-            border: 2px dashed #008080; 
-            padding: 10px 20px; 
-            border-radius: 30px; 
-            color: #008080; 
-            font-weight: bold; 
-            margin-bottom: 25px; 
-            font-size: 1.2rem; 
-            display: inline-block; 
-            box-shadow: 0 3px 8px rgba(0, 128, 128, 0.2);
-        }
+        /* Auto Display Box */
+        .package-info-box { display: block; background: #fff8dc; border: 2px solid #ffcc00; padding: 15px; border-radius: 8px; margin-top: 10px; color: #333; animation: fadeIn 0.5s; }
+        @keyframes fadeIn { from { opacity:0; transform:translateY(-10px); } to { opacity:1; transform:translateY(0); } }
+        .package-title { color: #008080; font-weight: bold; text-decoration: underline; font-size: 1.2rem; margin-bottom: 8px; text-transform: uppercase; }
+        .free-tag { background: yellow; padding: 2px 8px; font-weight: bold; color: #008080; border-radius: 4px; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
         
-        /* New Box for showing Selected Subjects & Fees */
-        .details-box { background: #e0f2f1; border: 2px solid #008080; padding: 15px; border-radius: 10px; margin-bottom: 25px; text-align: left; }
-        .details-box h3 { margin-top: 0; color: #008080; font-size: 1.2rem; text-decoration: underline; text-align: center; }
-        .detail-item { font-size: 1.1rem; margin-bottom: 8px; font-weight: bold; }
-        .detail-value { color: red; }
+        #receipt-template { display: none; padding: 30px; background: white; border: 5px solid #008080; margin-top: 20px; color: black; }
+        .rec-header { text-align: center; border-bottom: 3px solid #008080; padding-bottom: 15px; margin-bottom: 20px; }
+        .rec-row { display: flex; margin-bottom: 10px; border-bottom: 1px solid #ddd; padding-bottom: 5px; }
+        .rec-label { font-weight: bold; width: 40%; color: #008080; }
+        .rec-val { width: 60%; font-weight: bold; }
     </style>
 </head>
 <body>
-    <header>
-        <h1>The Catalyst Assam</h1>
-        <p style="letter-spacing: 5px; font-weight: bold; margin: 5px 0 0 0;">COMPETITIVE EXAMS ADMISSION</p>
-    </header>
-    
+    <div id="loading-overlay"><div style="font-size: 3rem;">🚀</div><h2>Submitting Form...</h2><p>Saving Data & Generating Receipt...</p></div>
+    <header><h1>The Catalyst Assam</h1><p style="letter-spacing: 5px; font-weight: bold; margin: 5px 0 0 0;">COMPETITIVE EXAMS ADMISSION</p></header>
     <div class="container">
-        <div class="form-box">
+        <div id="form-section" class="form-box">
             <h2 class="form-title">ADMISSION FORM</h2>
-            
-            <div class="warning-box">
-                🚀 Secure & Fast Admission Process
-            </div>
-            
-            <p class="info-text">
-                <strong>Please click on the "Proceed to Admission Form" button below to complete your admission process.</strong><br><br>
-                <span style="color:#008080; font-weight:bold;">অনুগ্ৰহ কৰি তলৰ "PROCEED TO ADMISSION FORM" বুটামত ক্লিক কৰি আপোনাৰ নামভৰ্তি সম্পূৰ্ণ কৰক।</span>
-            </p>
+            <form id="my-form" oninput="checkFormValidity()">
+                <div class="photo-upload-box">
+                    <label style="margin-bottom:10px; display:block; font-weight:bold;">Upload Student Photo (Passport Size):</label>
+                    <div class="photo-frame"><img id="preview-img" src="https://via.placeholder.com/140x180?text=Photo" class="photo-preview" alt="Student Photo"></div>
+                    <div style="margin-bottom: 10px;"><button type="button" class="adjust-btn" onclick="movePhoto(-10)">⬆ Up</button><button type="button" class="adjust-btn" onclick="movePhoto(10)">⬇ Down</button></div>
+                    <input type="file" id="photo-input" accept="image/*" onchange="previewImage(event)" required>
+                </div>
+                <div class="input-group"><label>1. Student Name (ছাত্র/ছাত্রীৰ নাম):</label><input type="text" name="student_name" id="s_name" required></div>
+                <div class="input-group"><label>2. Father's / Mother's Name (পিতৃ বা মাতৃৰ নাম):</label><input type="text" name="parent_name" id="p_name" required></div>
+                <div class="input-group"><label>3. Address (ঠিকনা):</label><textarea name="personal_address" id="per_address" rows="2" required></textarea></div>
+                <div class="input-group"><label>(I) Select Gender (লিংগ):</label>
+                    <div class="radio-container">
+                        <label class="radio-label"><input type="radio" name="gender" value="Male" required onclick="checkFormValidity()"> (a) Male</label>
+                        <label class="radio-label"><input type="radio" name="gender" value="Female" onclick="checkFormValidity()"> (b) Female</label>
+                        <label class="radio-label"><input type="radio" name="gender" value="Others" onclick="checkFormValidity()"> (c) Others</label>
+                    </div>
+                </div>
+                <div class="input-group dob-container">
+                    <div class="dob-box"><label>(II) (b) Date of Birth (জন্ম তাৰিখ):</label><input type="date" name="dob" id="dob_input" required onchange="calculateAge()"></div>
+                    <div class="age-box"><label>(a) Age (বয়স):</label><input type="text" name="age" id="age_display" readonly></div>
+                </div>
+                
+                <div class="input-group magic-box" id="medium-section">
+                    <label>4. Selected Course Details (নিৰ্বাচিত বিষয়):</label>
+                    <div id="package-display" class="package-info-box">
+                        <div class="package-title" id="disp-course">LOADING...</div>
+                        <div style="font-weight:bold; font-size:1.1rem; color:red; margin-top:10px;">Total Course Fee: ₹ <span id="disp-fee">0</span></div>
+                        <div id="disp-payment-type" style="font-weight:bold; color:#008080;">(Full Course Payment)</div>
+                    </div>
+                </div>
 
-            <div class="details-box" id="student-details" style="display: none;">
-                <h3>YOUR SELECTED COURSE</h3>
-                <div class="detail-item">Course: <span class="detail-value" id="disp-course"></span></div>
-                <div class="detail-item">Total Course Fee: <span class="detail-value" id="disp-fee"></span> <span style="color:#008080; font-size:0.9rem;">(Full Course)</span></div>
+                <div class="input-group"><label>5. Mobile Number (মবাইল নম্বৰ):</label><input type="tel" name="phone" id="phone" required pattern="[0-9]{10}" placeholder="10 Digit Number"></div>
+                <div class="input-group"><label>6. Email Address (ই-মেইল) - Optional:</label><input type="email" name="email" id="email" placeholder="Required for Email Receipt"></div>
+                <button type="submit" id="submit-btn" class="submit-btn" disabled>🔒 Fill All Fields to Unlock</button>
+            </form>
+        </div>
+        <div id="success-message">
+            <div style="font-size:4rem; color:green;">✔</div>
+            <h2 style="color:green;">SUBMITTED SUCCESSFULLY!</h2>
+            <p>Email Sent & Data Saved.</p>
+            <hr>
+            <div style="color:red; font-weight:bold; font-size:1rem; border:3px solid red; padding:15px; background:#fff0f0; line-height:1.6; text-align:center; max-width: 500px; margin: 0 auto;">
+                Downloading is mandatory, and you must bring that PDF file to The Catalyst Assam Head Office.<br>-------------------------------------<br>ডাউনলোড কৰাটো বাধ্যতামূলক আৰু সেই PDF ফাইলটো 'The Catalyst Assam'ৰ মুখ্য কাৰ্যালয়লৈ (Head Office) লৈ আহিব লাগিব।
             </div>
-            
-            <button id="redirect-btn" class="proceed-btn">PROCEED TO ADMISSION FORM ➔</button>
+            <hr>
+            <button onclick="downloadReceipt()" style="background:#0044ff; color:white; padding:15px 30px; border:none; border-radius:30px; cursor:pointer; font-weight:bold; margin-top:20px; font-size:1.1rem; box-shadow: 0 5px 15px rgba(0,68,255,0.4);">📥 DOWNLOAD RECEIPT (PDF)</button>
+            <br><br><button onclick="location.reload()" style="padding:10px 20px; cursor:pointer;">Fill New Form</button>
+        </div>
+        <div id="receipt-template">
+            <div class="rec-header"><h1 style="margin:0; color:#008080; font-size:24px;">THE CATALYST ASSAM</h1><p style="margin:5px 0;">ADMISSION ACKNOWLEDGEMENT RECEIPT (Competitive Exams)</p><p style="margin:0; font-size:12px;">Mayong Bazar, Rajamayong, Morigaon</p></div>
+            <div style="display:flex; justify-content:space-between; align-items: flex-start;">
+                <div style="width:65%;">
+                    <div class="rec-row"><div class="rec-label">Student Name:</div><div class="rec-val" id="r_name"></div></div>
+                    <div class="rec-row"><div class="rec-label">Father/Mother:</div><div class="rec-val" id="r_parent"></div></div>
+                    <div class="rec-row"><div class="rec-label">Address:</div><div class="rec-val" id="r_address"></div></div>
+                    <div class="rec-row"><div class="rec-label">Gender:</div><div class="rec-val" id="r_gender"></div></div>
+                    <div class="rec-row"><div class="rec-label">Age:</div><div class="rec-val" id="r_age"></div></div>
+                    <div class="rec-row"><div class="rec-label">Mobile:</div><div class="rec-val" id="r_phone"></div></div>
+                    <div class="rec-row" style="background:#ffffcc; padding:5px; border:1px solid #ddd;">
+                        <div class="rec-label" style="width:100%;">Course Applied For:<br><span id="r_package_text" style="font-weight:normal; font-size:0.9rem; color:black;"></span></div>
+                    </div>
+                    <div class="rec-row"><div class="rec-label">Date:</div><div class="rec-val" id="r_date"></div></div>
+                </div>
+                <div style="width:30%; text-align:center;"><img id="r_photo" src="" style="width:120px; height:150px; object-fit:cover; border:2px solid #000;"><p style="font-size:12px; margin-top:5px;">Student Photo</p></div>
+            </div>
+            <div style="margin-top:40px; display:flex; justify-content:space-between;"><div><p>___________________</p><p>Student Signature</p></div><div><p>___________________</p><p>Office Seal & Sign</p></div></div>
         </div>
     </div>
-
     <script>
-        // URL se query params lena
-        const queryString = window.location.search;
-        const params = new URLSearchParams(queryString);
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxSjEI7bVjF2jRQMqp2AOZFfTyzn90qFA72nL-WvOgpDBdafQzhRDw5RdAZItlC1amk/exec"; 
         
-        // Data nikalna
-        const course = params.get('course');
-        const fee = params.get('fee');
+        let urlCourse = "", urlFee = "";
+        let paymentTypeText = "(Full Course Payment)"; // Default
 
-        // Agar data hai, toh screen par dikhana
-        if(course) {
-            document.getElementById('student-details').style.display = 'block';
-            document.getElementById('disp-course').innerText = course ? course.toUpperCase() : 'N/A';
-            document.getElementById('disp-fee').innerText = fee ? '₹ ' + fee : '₹ 0';
+        window.onload = function() {
+            const params = new URLSearchParams(window.location.search);
+            urlCourse = params.get('course') || "Not Selected";
+            urlFee = params.get('fee') || "0";
+
+            // SMART LOGIC: Check if it's a Monthly course
+            if (urlCourse.toLowerCase().includes("monthly")) {
+                paymentTypeText = "(Monthly Payment)";
+            }
+
+            document.getElementById('disp-course').innerText = urlCourse;
+            document.getElementById('disp-fee').innerText = urlFee;
+            document.getElementById('disp-payment-type').innerText = paymentTypeText;
         }
 
-        const baseHostPath = "thecatalystassam.com/competitive_exams_courses_admission.html" + queryString;
-        const fullUrl = "https://" + baseHostPath;
+        let photoData = ""; let currentPos = 20;
+        function movePhoto(amount) { let img = document.getElementById('preview-img'); currentPos += amount; if(currentPos < 0) currentPos = 0; if(currentPos > 100) currentPos = 100; img.style.objectPosition = `center ${currentPos}%`; }
+        function previewImage(event) { let file = event.target.files[0]; if(file) { let reader = new FileReader(); reader.onload = function(e) { document.getElementById('preview-img').src = e.target.result; photoData = e.target.result; }; reader.readAsDataURL(file); } checkFormValidity(); }
+        function calculateAge() { let dob = new Date(document.getElementById("dob_input").value); let diff = Date.now() - dob.getTime(); let age = new Date(diff).getUTCFullYear() - 1970; document.getElementById("age_display").value = age + " Years"; checkFormValidity(); }
+        
+        function checkFormValidity() {
+            let btn = document.getElementById("submit-btn"); let isValid = true;
+            if(document.getElementById('s_name').value === "") isValid = false;
+            if(document.getElementById('p_name').value === "") isValid = false;
+            if(document.getElementById('per_address').value === "") isValid = false;
+            if(document.getElementById('phone').value === "") isValid = false;
+            if(document.getElementById('dob_input').value === "") isValid = false;
+            if(!photoData) isValid = false;
+            if(!document.querySelector('input[name="gender"]:checked')) isValid = false;
+            if (isValid) { btn.disabled = false; btn.classList.add("active"); btn.innerHTML = "SUBMIT FORM (ফৰ্ম দাখিল কৰক)"; } else { btn.disabled = true; btn.classList.remove("active"); }
+        }
 
-        // BUTTON CLICK TRICK (Multiple Escapes)
-        document.getElementById("redirect-btn").addEventListener("click", function() {
-            // Escape 1: Try AppCreator24's native external call
-            try { window.open(fullUrl, "_system"); } catch(e) {}
+        function downloadReceipt() {
+            document.getElementById('r_name').innerText = document.getElementById('s_name').value;
+            document.getElementById('r_parent').innerText = document.getElementById('p_name').value;
+            document.getElementById('r_address').innerText = document.getElementById('per_address').value;
+            document.getElementById('r_gender').innerText = document.querySelector('input[name="gender"]:checked').value;
+            document.getElementById('r_age').innerText = document.getElementById('age_display').value;
+            document.getElementById('r_phone').innerText = document.getElementById('phone').value;
             
-            // Escape 2: Standard Blank Target
-            setTimeout(function() { window.open(fullUrl, "_blank"); }, 100);
+            let pkgText = `${urlCourse}\n`;
+            pkgText += `Total Fee: ₹${urlFee} ${paymentTypeText}`; // DYNAMIC PAYMENT TEXT
+
+            document.getElementById('r_package_text').innerText = pkgText;
+            document.getElementById('r_date').innerText = new Date().toLocaleDateString();
+            document.getElementById('r_photo').src = photoData;
+            var element = document.getElementById('receipt-template'); element.style.display = 'block'; 
+            var opt = { margin: 5, filename: 'Catalyst_Receipt_' + document.getElementById('s_name').value + '.pdf', image: { type: 'jpeg', quality: 0.98 }, html2canvas: { scale: 2 }, jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' } };
+            html2pdf().set(opt).from(element).save().then(() => { element.style.display = 'none'; });
+        }
+
+        // --- THE MASTER FIX FOR BLANK PDF ISSUE ---
+        document.getElementById('my-form').addEventListener('submit', function(e) {
+            e.preventDefault(); 
+            document.getElementById('loading-overlay').style.display = 'block';
             
-            // Escape 3: Direct Android Chrome Intent Bypass (Aakhri Hathiyar)
+            // 🔥 TRICK: Form ko gayab karke Receipt ko top par la rahe hain taaki blank capture na ho
+            document.getElementById('form-section').style.display = 'none';
+            window.scrollTo(0, 0); // Ekdum top par scroll kar diya
+            
+            let formData = new FormData(this); let obj = {}; formData.forEach((value, key) => obj[key] = value); obj.photo = photoData; 
+            
+            obj.course_type = "Competitive Exam"; 
+            obj.final_subjects = `${urlCourse} [Fee:${urlFee}]`; 
+
+            // Receipt ka data bharna
+            document.getElementById('r_name').innerText = document.getElementById('s_name').value;
+            document.getElementById('r_parent').innerText = document.getElementById('p_name').value;
+            document.getElementById('r_address').innerText = document.getElementById('per_address').value;
+            document.getElementById('r_gender').innerText = document.querySelector('input[name="gender"]:checked').value;
+            document.getElementById('r_age').innerText = document.getElementById('age_display').value;
+            document.getElementById('r_phone').innerText = document.getElementById('phone').value;
+            
+            let pkgText = `${urlCourse}\n`;
+            pkgText += `Total Fee: ₹${urlFee} ${paymentTypeText}`; // DYNAMIC PAYMENT TEXT
+
+            document.getElementById('r_package_text').innerText = pkgText;
+            document.getElementById('r_date').innerText = new Date().toLocaleDateString();
+            document.getElementById('r_photo').src = photoData;
+            
+            var element = document.getElementById('receipt-template'); 
+            element.style.display = 'block'; 
+            
+            // Ab form screen ke bilkul samne hai, isliye sirf 1.5 seconds ka wait kafi hai
             setTimeout(function() {
-                window.location.href = "intent://" + baseHostPath + "#Intent;scheme=https;package=com.android.chrome;end;";
-            }, 400);
+                // scrollY: 0 lagaya hai taaki page offset zero par render ho
+                var opt = { margin: 5, filename: 'Receipt.pdf', image: { type: 'jpeg', quality: 0.98 }, html2canvas: { scale: 2, useCORS: true, scrollY: 0 }, jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' } };
+                
+                html2pdf().set(opt).from(element).toPdf().output('datauristring').then(function(pdfBase64) {
+                    element.style.display = 'none'; // Wapas PDF form ko chupa diya
+                    obj.pdf_data = pdfBase64; 
+                    
+                    fetch(SCRIPT_URL, { method: "POST", mode: "no-cors", body: JSON.stringify(obj), headers: { "Content-Type": "application/json" } })
+                    .then(() => { 
+                        document.getElementById('loading-overlay').style.display = 'none'; 
+                        document.getElementById('success-message').style.display = 'block'; 
+                        window.scrollTo(0,0); 
+                    })
+                    .catch(err => { 
+                        document.getElementById('loading-overlay').style.display = 'none'; 
+                        document.getElementById('form-section').style.display = 'block'; 
+                        alert("Submission Failed! Please check internet."); 
+                    });
+                });
+            }, 1500); // <-- 1.5 Second Wait 
         });
     </script>
 </body>
