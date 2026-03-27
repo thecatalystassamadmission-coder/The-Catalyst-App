@@ -328,23 +328,23 @@
         <div class="image-box-container">
             <div class="img-card">
                 <img src="—Pngtree—admission open banner abstract shape_8531507.png" alt="Admission Open" class="custom-img">
-                <a href="intent://thecatalystassam.com/admission_menu.html#Intent;scheme=https;package=com.android.chrome;end;" target="_blank" rel="noopener noreferrer" class="action-btn">ADMISSION</a>
+                <a href="javascript:void(0);" onclick="openInBrowser('https://thecatalystassam.com/admission_menu.html')" class="action-btn">ADMISSION</a>
             </div>
             <div class="img-card">
                 <img src="the_catalyst_book_source.jpg" alt="Book Source" class="custom-img">
-                <a href="intent://thecatalystassam.com/the_catalyst_assam_book_source.html#Intent;scheme=https;package=com.android.chrome;end;" target="_blank" rel="noopener noreferrer" class="action-btn">BOOK SOURCE</a>
+                <a href="javascript:void(0);" onclick="openInBrowser('https://thecatalystassam.com/the_catalyst_assam_book_source.html')" class="action-btn">BOOK SOURCE</a>
             </div>
             <div class="img-card">
                 <img src="—Pngtree—open book logo_15366757.png" alt="Class Routine" class="custom-img">
-                <a href="intent://thecatalystassam.com/routine.html#Intent;scheme=https;package=com.android.chrome;end;" target="_blank" rel="noopener noreferrer" class="action-btn">MONTHLY CLASS ROUTINE</a>
+                <a href="javascript:void(0);" onclick="openInBrowser('https://thecatalystassam.com/routine.html')" class="action-btn">MONTHLY CLASS ROUTINE</a>
             </div>
             <div class="img-card">
                 <img src="the_catalyst_assam_social_handle.png" alt="Social Handle" class="custom-img">
-                <a href="intent://thecatalystassam.com/the_catalyst_assam_social_handle.html#Intent;scheme=https;package=com.android.chrome;end;" target="_blank" rel="noopener noreferrer" class="action-btn">SOCIAL HANDLE</a>
+                <a href="javascript:void(0);" onclick="openInBrowser('https://thecatalystassam.com/the_catalyst_assam_social_handle.html')" class="action-btn">SOCIAL HANDLE</a>
             </div>
         </div>
         
-        <a href="intent://maps.app.goo.gl/QzmL5sCzsZ2knXGL9?g_st=aw#Intent;scheme=https;package=com.android.chrome;end;" target="_blank" rel="noopener noreferrer" class="map-btn">
+        <a href="javascript:void(0);" onclick="openInBrowser('https://maps.app.goo.gl/QzmL5sCzsZ2knXGL9?g_st=aw')" class="map-btn">
             <img src="https://upload.wikimedia.org/wikipedia/commons/3/39/Google_Maps_icon_%282015-2020%29.svg" alt="Map" class="map-icon-small">
             Locate on Google Map (The Catalyst Assam coaching centre)
         </a>
@@ -399,6 +399,17 @@
     </footer>
 
     <script>
+        // Force Open in Default External Browser (Chrome/Safari)
+        function openInBrowser(url) {
+            // First try with pure JavaScript window open logic
+            var newWindow = window.open(url, '_system');
+            
+            // Fallback for some strict Android webviews
+            if (!newWindow || newWindow.closed || typeof newWindow.closed == 'undefined') {
+                window.location.href = "intent://" + url.replace(/^https?:\/\//, '') + "#Intent;scheme=https;package=com.android.chrome;end;";
+            }
+        }
+
         const possibleAnnouncements = [
             'announcements.png', 
             'announcements1.png', 
