@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Proceed to Browser</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background: linear-gradient(135deg, #8C00FF 0%, #7132CA 33%, #9929EA 66%, #C47BE4 100%);
+            color: #ffffff; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center;
+        }
+        
+        .container { padding: 20px; width: 100%; max-width: 500px; text-align: center; }
+        
+        .form-box { 
+            background: rgba(28, 9, 54, 0.6); padding: 40px 30px; border-radius: 20px; 
+            border: 2px solid #D8FF00; box-shadow: 0 0 30px rgba(216, 255, 0, 0.2); 
+            backdrop-filter: blur(12px); display: flex; flex-direction: column; align-items: center; 
+        }
+        
+        .logo-img { width: 90px; height: 90px; border-radius: 50%; border: 3px solid #D8FF00; margin-bottom: 20px; background-color: white; box-shadow: 0 0 20px rgba(216, 255, 0, 0.5); }
+        
+        h2.form-title { color: #D8FF00; text-transform: uppercase; margin: 0 0 25px 0; text-shadow: 0 0 15px rgba(216, 255, 0, 0.5); border-bottom: 2px dashed #D8FF00; padding-bottom: 10px; width: 100%; }
+        
+        .warning-box {
+            background: rgba(255, 255, 255, 0.15); border: 2px dashed #ffffff; 
+            color: #fff; padding: 15px 20px; font-weight: bold; border-radius: 15px; 
+            margin-bottom: 25px; font-size: 1.2rem; line-height: 1.5;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.2); width: 100%;
+        }
+
+        p.info-text { font-size: 1.1rem; color: #fff; line-height: 1.6; margin-bottom: 20px; }
+
+        .proceed-btn { 
+            background-color: #D8FF00; color: #000; border: none; padding: 18px 25px; 
+            width: 100%; border-radius: 40px; font-weight: 900; font-size: 1.2rem; 
+            cursor: pointer; text-transform: uppercase; box-shadow: 0 0 25px rgba(216, 255, 0, 0.6); 
+            transition: 0.3s; display: block; text-decoration: none; margin-top: 10px;
+        }
+        .proceed-btn:hover { background-color: #ffffff; box-shadow: 0 0 35px rgba(255, 255, 255, 0.8); transform: scale(1.05); }
+        
+        .back-btn { margin-top: 20px; color: #D8FF00; font-weight: bold; text-decoration: none; border-bottom: 1px solid transparent; transition: 0.3s; }
+        .back-btn:hover { border-color: #D8FF00; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="form-box">
+            <img src="logo.png" alt="Logo" class="logo-img">
+            <h2 class="form-title">ACTION REQUIRED</h2>
+            
+            <div class="warning-box">
+                <span style="font-size: 2rem; display: block; margin-bottom: 10px;">🌐</span>
+                Open in Chrome Browser
+            </div>
+            
+            <p class="info-text">
+                For the best experience and to download files easily, this section must be opened in your phone's external browser (Google Chrome).<br><br>
+                <span style="color:#D8FF00; font-weight:bold; text-shadow: 0 0 5px rgba(216,255,0,0.5);">অনুগ্ৰহ কৰি তলৰ বুটামত ক্লিক কৰি Chrome Browser-ত খোলক।</span>
+            </p>
+            
+            <a href="#" id="redirect-btn" class="proceed-btn" target="_system">OPEN IN BROWSER ➔</a>
+            
+            <a href="index.html" class="back-btn">⬅ Cancel & Go Back</a>
+        </div>
+    </div>
+
+    <script>
+        // Check Kahan Jana Hai (URL Params Se)
+        const params = new URLSearchParams(window.location.search);
+        let destination = params.get('goto');
+
+        // Agar koi URL param mein gadbad ho toh default home pe jayega
+        if (!destination) {
+            destination = "index.html"; 
+        }
+
+        // Asli link banana (Bina https:// ke, kyunki intent usko auto add karega)
+        const baseHostPath = "thecatalystassam.com/" + destination;
+        
+        // --- REAL ANDROID INTENT TRICK ---
+        const isAndroid = navigator.userAgent.toLowerCase().indexOf("android") > -1;
+        const btn = document.getElementById("redirect-btn");
+
+        if(isAndroid) {
+            // Android ke default browser (Chrome) mein force open
+            btn.href = "intent://" + baseHostPath + "#Intent;scheme=https;action=android.intent.action.VIEW;end;";
+        } else {
+            // PC ya iPhone ke liye normal blank tab open
+            btn.href = "https://" + baseHostPath;
+            btn.target = "_blank";
+        }
+    </script>
+</body>
+</html>
