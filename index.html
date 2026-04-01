@@ -37,6 +37,17 @@
             position: relative; 
             width: 100%; 
         }
+        
+        .app-download-btn { 
+            position: absolute; top: 20px; right: 20px; 
+            background-color: #D8FF00; color: #000; 
+            text-decoration: none; padding: 6px 15px; border-radius: 20px; 
+            font-weight: 900; font-size: 0.9rem; border: none; 
+            box-shadow: 0 0 20px rgba(216, 255, 0, 0.6); /* Glow Effect */
+            z-index: 1000; display: flex; align-items: center; gap: 5px; 
+            transition: 0.3s; 
+        }
+        .app-download-btn:hover { transform: scale(1.1); box-shadow: 0 0 30px rgba(216, 255, 0, 0.9); }
 
         .logo-img { 
             width: 80px; height: 80px; border-radius: 50%; 
@@ -243,6 +254,7 @@
         @media (max-width: 600px) { 
             header h1 { font-size: 1.8rem; } 
             .subtitle { font-size: 0.75rem; } 
+            .app-download-btn { top: 15px; right: 15px; font-size: 0.8rem; padding: 5px 10px; }
             .red-banner h2 { font-size: 1.5rem; }
             .special-bubble { font-size: 16px; padding: 10px 20px; white-space: normal; }
             .custom-img { width: 80px; height: 80px; padding: 10px; }
@@ -292,7 +304,7 @@
     </div>
 
     <header>
-        <!-- Removed App Download Button -->
+        <a href="https://drive.google.com/uc?export=download&id=13-1SYIAoiXurs21gS32jkhd7t-P9J8z7" class="app-download-btn">App ⬇</a>
         <img src="logo.png" alt="Logo" class="logo-img">
         
         <div class="title-wrapper">
@@ -329,23 +341,23 @@
         <div class="image-box-container">
             <div class="img-card">
                 <img src="—Pngtree—admission open banner abstract shape_8531507.png" alt="Admission Open" class="custom-img">
-                <a href="#" class="action-btn" onclick="openExternalLink('admission_menu.html')">ADMISSION</a>
+                <a href="javascript:void(0)" class="action-btn" onclick="openExternalLink('admission_menu.html')">ADMISSION</a>
             </div>
             <div class="img-card">
                 <img src="the_catalyst_book_source.jpg" alt="Book Source" class="custom-img">
-                <a href="#" class="action-btn" onclick="openExternalLink('the_catalyst_assam_book_source.html')">BOOK SOURCE</a>
+                <a href="javascript:void(0)" class="action-btn" onclick="openExternalLink('the_catalyst_assam_book_source.html')">BOOK SOURCE</a>
             </div>
             <div class="img-card">
                 <img src="—Pngtree—open book logo_15366757.png" alt="Class Routine" class="custom-img">
-                <a href="#" class="action-btn" onclick="openExternalLink('routine.html')">MONTHLY CLASS ROUTINE</a>
+                <a href="javascript:void(0)" class="action-btn" onclick="openExternalLink('routine.html')">MONTHLY CLASS ROUTINE</a>
             </div>
             <div class="img-card">
                 <img src="the_catalyst_assam_social_handle.png" alt="Social Handle" class="custom-img">
-                <a href="#" class="action-btn" onclick="openExternalLink('the_catalyst_assam_social_handle.html')">SOCIAL HANDLE</a>
+                <a href="javascript:void(0)" class="action-btn" onclick="openExternalLink('the_catalyst_assam_social_handle.html')">SOCIAL HANDLE</a>
             </div>
         </div>
         
-        <a href="#" class="map-btn" onclick="openExternalLinkMap('https://maps.app.goo.gl/QzmL5sCzsZ2knXGL9?g_st=aw')">
+        <a href="javascript:void(0)" class="map-btn" onclick="openExternalLinkMap('https://maps.app.goo.gl/QzmL5sCzsZ2knXGL9?g_st=aw')">
             <img src="https://upload.wikimedia.org/wikipedia/commons/3/39/Google_Maps_icon_%282015-2020%29.svg" alt="Map" class="map-icon-small">
             Locate on Google Map (The Catalyst Assam coaching centre)
         </a>
@@ -382,6 +394,10 @@
                 <div style="color:red; font-weight:900; font-size:1.2rem; text-transform:uppercase;">MR. NITU SARKAR</div>
                 <div style="font-weight:bold; color: red; font-size: 0.9rem;">B.TECH, NIT RAIPUR</div>
             </div>
+            <div class="teacher-card">
+                <img src="medhi.png" alt="Medhi Sir" class="pulen-photo">
+                <div style="font-weight: 900; color: #1a0066; font-size: 1.1rem;">MEDHI SIR</div>
+            </div>
         </div>
 
     </div>
@@ -400,12 +416,13 @@
     </footer>
 
     <script>
-        // FUNCTION TO FORCE OPEN CHROME BROWSER
+        // FUNCTION TO FORCE OPEN CHROME BROWSER DIRECTLY FROM APP
         function openExternalLink(page) {
             const isAndroid = navigator.userAgent.toLowerCase().indexOf("android") > -1;
             const fullUrl = "thecatalystassam.com/" + page;
             
             if(isAndroid) {
+                // Ye intent direct chrome ko order dega ki app close karo aur URL kholo
                 window.location.href = "intent://" + fullUrl + "#Intent;scheme=https;action=android.intent.action.VIEW;package=com.android.chrome;end;";
             } else {
                 window.open("https://" + fullUrl, "_blank");
@@ -417,9 +434,8 @@
             const isAndroid = navigator.userAgent.toLowerCase().indexOf("android") > -1;
             
             if(isAndroid) {
-                // intent format for standard external links
                 const cleanUrl = url.replace(/^https?:\/\//, '');
-                window.location.href = "intent://" + cleanUrl + "#Intent;scheme=https;action=android.intent.action.VIEW;end;";
+                window.location.href = "intent://" + cleanUrl + "#Intent;scheme=https;action=android.intent.action.VIEW;package=com.android.chrome;end;";
             } else {
                 window.open(url, "_blank");
             }
